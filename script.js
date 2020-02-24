@@ -1,7 +1,7 @@
 const main = document.querySelector('main')
 const voicesSelect = document.getElementById('voices')
-const textArea = document.getElementById('text')
-const readBtn = document.getElementById('voices')
+const textarea = document.getElementById('text')
+const readBtn = document.getElementById('read')
 const toggleBtn = document.getElementById('toggle')
 const closeBtn = document.getElementById('close')
 
@@ -114,6 +114,11 @@ function speakText() {
   speechSynthesis.speak(message)
 }
 
+// Set voice
+function setVoice(e) {
+  message.voice = voices.find(voice => voice.name === e.target.value)
+}
+
 // Voices chnanged
 speechSynthesis.addEventListener('voiceschanged', getVoices)
 
@@ -126,5 +131,14 @@ toggleBtn.addEventListener('click', () =>
 closeBtn.addEventListener('click', () =>
   document.getElementById('text-box').classList.remove('show')
 )
+
+// Change voice
+voicesSelect.addEventListener('change', setVoice)
+
+// Read text button
+readBtn.addEventListener('click', () => {
+  setTextMessage(textarea.value)
+  speakText()
+})
 
 getVoices()
